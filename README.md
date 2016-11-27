@@ -58,6 +58,9 @@ need to stop using it! SSL is now used by default. If you want not to use
 it, please use the "--nossl" parameter.**
 
   * The CLI interface is now implemented with docopt
+    (a copy compatible with Python 2.4 and newer is included - so on systems
+    that lack it, you can run the `isbg.py` script locally in source workspace,
+    or you copy `docopt.py` to a system location like `/usr/lib/python-2.x/`).
   * The README now includes the documentation
   * New command --imaplist lists the directories in IMAP account
   * Code now follows PEP-8 style guide
