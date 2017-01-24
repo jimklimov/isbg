@@ -300,13 +300,14 @@ if opts["--imapport"] is None:
         imapport = 993
 
 if pastuidsfile is None:
-    if imapproxyuser is None:
-        pastuidsfile = os.path.expanduser("~" + os.sep + ".isbg-track" + "%" + imapuser)
-    else:
-        pastuidsfile = os.path.expanduser("~" + os.sep + ".isbg-track" + "%" + imapuser + "%" + imapproxyuser)
+    pastuidsfile = os.path.expanduser("~" + os.sep + ".isbg-track")
     m = md5()
     m.update(imaphost)
     m.update(imapuser)
+    if imapproxyuser is None:
+        m.update('')
+    else:
+        m.update(imapproxyuser)
     m.update(repr(imapport))
     res = hexof(m.digest())
     pastuidsfile = pastuidsfile + res
@@ -349,6 +350,10 @@ if passwdfilename is None:
     m = md5()
     m.update(imaphost)
     m.update(imapuser)
+    if imapproxyuser is None:
+        m.update('')
+    else:
+        m.update(imapproxyuser)
     m.update(repr(imapport))
     passwdfilename = os.path.expanduser("~" + os.sep +
                                         ".isbg-" + hexof(m.digest()))
@@ -359,6 +364,11 @@ if passwordhash is None:
     m.update(imaphost)
     m.update(m.digest())
     m.update(imapuser)
+    m.update(m.digest())
+    if imapproxyuser is None:
+        m.update('')
+    else:
+        m.update(imapproxyuser)
     m.update(m.digest())
     m.update(repr(imapport))
     m.update(m.digest())
