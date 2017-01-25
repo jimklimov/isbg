@@ -304,9 +304,7 @@ if pastuidsfile is None:
     m = md5()
     m.update(imaphost)
     m.update(imapuser)
-    if imapproxyuser is None:
-        m.update('')
-    else:
+    if imapproxyuser is not None:
         m.update(imapproxyuser)
     m.update(repr(imapport))
     res = hexof(m.digest())
@@ -314,7 +312,8 @@ if pastuidsfile is None:
 
 if opts["--lockfilename"] is None:
     if imapproxyuser is None:
-        lockfilename = os.path.expanduser("~" + os.sep + ".isbg-lock" + "%" + imapuser)
+        # This was the name in pre-imapproxyuser versions, single-session only
+        lockfilename = os.path.expanduser("~" + os.sep + ".isbg-lock")
     else:
         lockfilename = os.path.expanduser("~" + os.sep + ".isbg-lock" + "%" + imapuser + "%" + imapproxyuser)
 
@@ -350,9 +349,7 @@ if passwdfilename is None:
     m = md5()
     m.update(imaphost)
     m.update(imapuser)
-    if imapproxyuser is None:
-        m.update('')
-    else:
+    if imapproxyuser is not None:
         m.update(imapproxyuser)
     m.update(repr(imapport))
     passwdfilename = os.path.expanduser("~" + os.sep +
@@ -365,11 +362,9 @@ if passwordhash is None:
     m.update(m.digest())
     m.update(imapuser)
     m.update(m.digest())
-    if imapproxyuser is None:
-        m.update('')
-    else:
+    if imapproxyuser is not None:
         m.update(imapproxyuser)
-    m.update(m.digest())
+        m.update(m.digest())
     m.update(repr(imapport))
     m.update(m.digest())
     passwordhash = m.digest()
